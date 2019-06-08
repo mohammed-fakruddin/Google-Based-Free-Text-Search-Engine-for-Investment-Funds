@@ -5,4 +5,4 @@ Searching (text based) for information has become essential part in the era of d
 # One Pager Summary
 Please refer to the document for one pager summary: "GoogleSearchForFundsData.pdf"
 # Detailed Step by Step Instructions
-Please refer to the document for detailed step-by-step instruction if you want to replicate this exercise: "GoogleSearchForFundsData.pdf"
+Please refer to the document for detailed step-by-step instruction if you want to replicate this exercise: "GoogleStyleFreeTextSearchEngineforFunds.pdf"
