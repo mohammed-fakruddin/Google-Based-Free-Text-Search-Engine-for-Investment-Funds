@@ -1,0 +1,289 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+ <head> 
+     <meta charset="UTF-8"> 
+     <title>Standard Search</title> 
+	  <script type="text/javascript" src="javascript/elasticsearch.js"></script>
+	  <script type="text/javascript" src="javascript/jQuery-3.4.1.js"></script>
+	  <script type="text/javascript" src="javascript/elasticsearch.jquery.js"></script>
+	  <style>
+		table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+		//text-align: center;
+		margin-left: 10%;
+
+		
+		}
+		/*p.indent{ padding-left: 100%;text-align:center; }*/
+		h2, h3 {
+			
+			text-align: center;
+			font-weight: 20%;
+			font-family: sans-serif;
+		}
+		.para{
+			margin-top: 8%;
+			font-weight: 20%;
+		}
+		.para1{
+			margin-top: -1%;
+			font-weight: 20%;
+		}
+		.search_text {
+			margin-top: 1%;
+			margin-left: 35%;
+			height: 25px;
+			width: 300px; 
+			margin-bottom: 1%;
+			font-size: 100%;
+			font-family: serif;
+		}
+		#search_container {
+			//margin:auto;
+			//position:relative;
+			margin-top: 4%;
+			margin-left: 1%;
+
+			height:2em;
+			//border: 1px solid #ccc;
+			//background-color: #f3f3f3;
+		}
+		#total {
+			margin:auto;
+			position:relative;
+			//left: 20%;
+		}
+		#hits {
+			margin:auto;
+			position:relative;
+			//left: 20%;
+		}
+		
+		.container input {
+			position: relative;
+			padding-left: 30%;
+			opacity: 0;
+			cursor: pointer;
+		}
+		
+		.radio-input {
+			float: left;
+			margin-left: 40%;
+			font-size: 150%;
+
+		}
+
+		.radio_simple {
+			margin-left: 15px;
+		}
+		.para {
+			font-weight: 50px;
+			font-size: 100%; 
+		}
+		.submit_btn{
+			margin-left: 2%;
+			height: 100px;
+			width: 80px;
+			font-size: 120%;
+			font-family: serif;
+		}
+		
+	</style>
+ </head> 
+ <body>
+
+ 
+ <div id="search_container"> 
+	
+	<!--img src="P:\Pictures\Fondcenter_New_Logo.png" width="200" height="100"-->
+	<h2><p class="para">Google Style Searching for Investment Funds</p></h2> 
+	<h3><p class="para1">(With Thousands of Data Attributes)</p></h3> 
+     <!--<label for"search"><b>Search</b></label> -->
+     <input class="search_text" type="text" id="search" name="text_name" /> 
+	 
+	 <input class="submit_btn" type="submit" value="Search" onclick="doSearch(document.getElementById('search').value, getRadioButtonValue('type'));"/> 
+	 <br>
+	 <div>
+     <input class="radio-input" type="radio" name="type" id="type" value="Parse" align="center">Parse
+     <input  class= "radio_simple" type="radio" name="type" id="type" value="Simple"> Simple
+	 </div>
+	 <!--<input type="radio" name="type" id="type" value="page"> Numeric -->
+	
+     <div id="total"></div> 
+	<div id="hits"></div> 
+ </div> 
+ 
+	
+	
+ <script type="application/javascript"> 
+   /** 
+    * Performs a search request against an Elasticsearch server. 
+    * @param {string} needle 
+    *   The string to search for. 
+    * @param {string} filter 
+    *   A string to use to filter by type. For example: 'article'; 
+    */ 
+   function doSearch (needle, filter) { 
+     var searchHost = 'http://localhost:9200/product/default/_search'; 
+     var body = { 
+       'size': 20 
+     }; 
+	//document.write(needle);
+	//document.write(filter.value);
+     // Check if the search string or the filter were entered. 
+     if ((needle.length !== 0) && ((typeof filter !== 'undefined') || (filter.length !== 0))) { 
+       //var query = { 
+       //  'match': { "FULL_SHARE_CLASS_NAME": "hsbc" } 
+       //}; 
+	   
+	   /*var query = {
+		'match': {
+			"COMPANY_NAME": {
+			"query":     needle,
+			"fuzziness": "AUTO",
+			"operator":  "and"
+			}
+		}
+	   };*/
+	   
+	   /*var query = {
+		'multi_match': {
+			"query":                needle,
+			
+			"fuzziness": "AUTO",
+			"fields":                "*_NAME",
+			"slop" :10
+			
+				}
+		};*/
+		if (filter == 'Parse'){
+			var query = {
+			'simple_query_string': {
+				"query":                needle,
+				"fields":                [ "*Name", "*Category", "*is*", "IS*", "*Fee*", "*FEE*", "*Amount*", "ISIN"],
+			}
+					
+			};
+		}else{
+			var query = {
+			'multi_match': {
+			"query":                needle,
+			 //"type":                 "best_fields", 
+			"fuzziness": "AUTO",
+			//"fields":                [ "*_NAME", "*Category", "*is*", "IS*", "*fee*", "*FEE*", "*Amount*", "ISIN", "Reinvest_Distributing_Tranche"],
+			"fields":                [ "*Name", "*Category", "IS*", "EFAMA*", "*Amount*", "ISIN", "Reinvest_Distributing_Tranche", "*is", "*Fee*", "Benchmark", "*Distribution"],
+			"slop" :10
+				}
+				
+			};
+			/*var query = {
+				'dis_max': {
+					"tie_breaker" : 0.7,
+					"boost" : 1.2,
+					"queries" : [
+							{
+								"regexp" : { "ISIN" : needle + ".+*" }
+							},
+							{
+								"wildcard" : { "FULL_SHARE_CLASS_NAME": needle }
+							}
+					]	
+				}
+			
+			}*/
+		}
+		
+	   var hl = {
+				"pre_tags" : ["<mark>"],
+				"post_tags" : ["</mark>"],
+
+				"fields": {
+				
+					"*": {"fragment_size" : 150, "number_of_fragments" : 3}
+				}
+		
+		
+	   };
+       /*if (needle.length !== 0) { 
+         query.bool.must = { 
+           'match_all': { 
+             
+           } 
+         }; 
+       }
+	*/	   
+       /*if ((typeof filter !== 'undefined') && (filter.length !== 0)) { 
+         query.bool.filter = { 
+           'term': { 
+             'type': filter 
+           } 
+         }; 
+       } */
+       body.query = query; 
+	   body.highlight = hl;
+	   //document.write(body.value);
+     // Perform the request. 
+     var xmlHttp = new XMLHttpRequest(); 
+     xmlHttp.open('POST', searchHost, false); 
+     xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8'); 
+     xmlHttp.setRequestHeader("Access-Control-Allow-Origin", "http://localhost");
+     xmlHttp.setRequestHeader('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+     xmlHttp.setRequestHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    //Auth Each API Request created by user.
+     xmlHttp.send(JSON.stringify(body)); 
+     var response = JSON.parse(xmlHttp.responseText); 
+  
+     // Print results on screen. 
+     var output = '<table style="width:75%"><tr><th>Rank</th><th>ISIN</th><th>Share Class</th><th>Matched Fields</th></tr><tr>'; 
+     for (var i = 0; i < response.hits.hits.length; i++) { 
+		output += '<td><h4>' + response.hits.hits[i]._score + '</h4></td>'; 
+       output += '<td><h4>' + response.hits.hits[i]._source.ISIN + '</h4></td>'; 
+       output += '<td>' + response.hits.hits[i]._source.FULL_SHARE_CLASS_NAME + '</td>'; 
+	   if(typeof response.hits.hits[i].highlight !== "undefined"){
+			
+			//output += response.hits.hits[i].highlight.FULL_SHARE_CLASS_NAME + '</br>'; 
+			 output += '<td>'; 
+			 for(var propt in response.hits.hits[i].highlight){
+				output += '<b>'+propt +" </b>:  " + response.hits.hits[i].highlight[propt] + '</br>';
+			}
+			output += '<td>';
+
+			/*for (const [key, value] of Object.entries(response.hits.hits[i].highlight)) {
+				output += key +" : " + value + '</br>';
+			}*/
+		}else{
+			output += '<td>';
+		}
+	   output += '</tr>';
+     } 
+	 output += '</table>'
+     document.getElementById('total').innerHTML = '<h3 style="color:blue">Showing ' + response.hits.total.value + ' results, took:' + response.took + 'ms' + '</h3>'; 
+     document.getElementById('hits').innerHTML = output;
+     } 
+	  
+   } 
+  
+   /** 
+    * Helper function to obtain the value of a set of radio buttons. 
+    * 
+    * @param {string} name 
+    *   The name of the radio elements. 
+    * @returns {string} 
+    *   The selected value or an empty string if nothing was selected. 
+    */ 
+   function getRadioButtonValue (name) { 
+     var radios = document.getElementsByName(name); 
+  
+     for (var i = 0, length = radios.length; i < length; i++) { 
+       if (radios[i].checked) { 
+         return radios[i].value; 
+       } 
+     } 
+     return ''; 
+   } 
+  
+   doSearch('', ''); 
+ </script> 
+ </body> 
+ </html> 
