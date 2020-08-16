@@ -3,7 +3,8 @@
 https://mohammed-fakruddin.github.io/RankBasedSearchEngindForFundIndustry/
 
 # Elastic Search - Rank Based Search Engine for Funds Industry
-This is google style free-text search engine for investment products
+This is google style free-text search engine for investment products. For video demo please see the link below.
+https://youtu.be/qZ-eIRxtnXM
 # Motivation
 Searching (text based) for information has become essential part in the era of digital world. We all know how the search should work but the reality is implementing a good search engine is extremely challenging task. Therefore, in this short tutorial I wanted to explore the search technologies.​
 # One Pager Summary
