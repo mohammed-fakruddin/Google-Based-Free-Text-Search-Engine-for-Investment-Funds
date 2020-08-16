@@ -6,10 +6,11 @@ Searching (text based) for information has become essential part in the era of d
 Please refer to the document for one pager summary: "GoogleStyleSearchEngineForInvestmentFunds.pdf"
 # Detailed Step by Step Instructions
 Please refer to the document for detailed step-by-step instruction if you want to replicate this exercise: "GoogleStyleFreeTextSearchEngineforFunds.pdf"
-# Video Demo
+# Youtube Video Demo
 https://www.youtube.com/embed/qZ-eIRxtnXM"
 
-# Website
-https://mohammed-fakruddin.github.io/RankBasedSearchEngindForFundIndustry/
+Link to site: https://mohammed-fakruddin.github.io/RankBasedSearchEngindForFundIndustry/
+
+Explore ...
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qZ-eIRxtnXM" frameborder="0" seamless scrolling="no"></iframe>
