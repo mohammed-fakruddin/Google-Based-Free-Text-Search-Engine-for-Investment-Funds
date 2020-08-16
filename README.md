@@ -11,5 +11,4 @@ Please refer to the document for one pager summary: "GoogleStyleSearchEngineForI
 # Detailed Step by Step Instructions
 Please refer to the document for detailed step-by-step instruction if you want to replicate this exercise: "GoogleStyleFreeTextSearchEngineforFunds.pdf"
 # Youtube Video Demo
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qZ-eIRxtnXM" frameborder="0" seamless scrolling="no"></iframe>
