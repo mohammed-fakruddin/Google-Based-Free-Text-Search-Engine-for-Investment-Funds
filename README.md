@@ -14,7 +14,3 @@ Please refer to the document for detailed step-by-step instruction if you want t
 https://github.com/mohammed-fakruddin/RankBasedSearchEngindForFundIndustry/blob/master/GoogleStyleSearchEngineForInvestmentFunds.pdf
 # Youtube Video Demo
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qZ-eIRxtnXM" frameborder="0" seamless scrolling="no"></iframe>
-
-
-<iframe src="https://github.com/mohammed-fakruddin/RankBasedSearchEngindForFundIndustry/blob/master/GoogleStyleSearchEngineForInvestmentFunds.pdf&embedded=true" style="width:100%; height:100%;" frameborder="0"></iframe>
- 
