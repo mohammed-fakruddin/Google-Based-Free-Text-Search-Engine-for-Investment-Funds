@@ -1,3 +1,7 @@
+# Link to site:
+
+https://mohammed-fakruddin.github.io/RankBasedSearchEngindForFundIndustry/
+
 # Elastic Search - Rank Based Search Engine for Funds Industry
 This is google style free-text search engine for investment products
 # Motivation
@@ -9,8 +13,5 @@ Please refer to the document for detailed step-by-step instruction if you want t
 # Youtube Video Demo
 https://www.youtube.com/embed/qZ-eIRxtnXM"
 
-Link to site: https://mohammed-fakruddin.github.io/RankBasedSearchEngindForFundIndustry/
-
-Explore ...
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qZ-eIRxtnXM" frameborder="0" seamless scrolling="no"></iframe>
